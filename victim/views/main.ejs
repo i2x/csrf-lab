@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+  <%- include("partials/head", { title: "Dashboard - CSRF Lab" }) %>
+</head>
+
+<body>
+  <div class="app-shell">
+    <%- include("partials/sidebar", { active: "main", user }) %>
+    <%- include("partials/topbar", { user }) %>
+
+    <main class="app-main">
+      <div class="d-flex align-items-end justify-content-between flex-wrap gap-2 mb-3">
+        <div>
+          <h4 class="mb-1">Security Dashboard</h4>
+          <div class="text-muted">Monitoring session-based auth + CSRF demo endpoints</div>
+        </div>
+
+        <div class="d-flex gap-2">
+          <a href="/change-password" class="btn btn-accent">Go to Change Password</a>
+          <a href="http://localhost:4000/attack.html" target="_blank" rel="noreferrer" class="btn btn-ghost">
+            Open Attacker
+          </a>
+        </div>
+      </div>
+
+      <!-- metric cards -->
+      <div class="row g-3 mb-3">
+        <div class="col-12 col-md-4">
+          <div class="card-glass p-3 h-100">
+            <div class="text-muted small">Auth</div>
+            <div class="d-flex align-items-center justify-content-between mt-1">
+              <div class="fs-4 fw-semibold">Session Active</div>
+              <span class="badge text-bg-success">OK</span>
+            </div>
+            <div class="text-muted small mt-2">
+              Logged in as <span class="fw-semibold"><%= user.username %></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-4">
+          <div class="card-glass p-3 h-100">
+            <div class="text-muted small">Cookie Policy</div>
+            <div class="fs-4 fw-semibold mt-1">SameSite=None</div>
+            <div class="text-muted small mt-2">Secure=true (HTTPS localhost)</div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-4">
+          <div class="card-glass p-3 h-100">
+            <div class="text-muted small">CSRF Protection</div>
+            <div class="fs-4 fw-semibold mt-1">Disabled</div>
+            <div class="text-muted small mt-2">Vulnerable endpoint enabled for lab</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- activity table -->
+      <div class="card-glass p-3">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <div>
+            <div class="fw-semibold">Recent Actions</div>
+            <div class="text-muted small">This is a demo table (static UI)</div>
+          </div>
+          <span class="badge text-bg-dark border" style="border-color: rgba(148,163,184,.18)!important;">
+            Lab Mode
+          </span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-dark table-hover align-middle mb-0" style="--bs-table-bg: transparent;">
+            <thead style="border-color: rgba(148,163,184,.12);">
+              <tr>
+                <th style="min-width:140px;">Time</th>
+                <th>Actor</th>
+                <th>Action</th>
+                <th style="min-width:220px;">Target</th>
+                <th style="min-width:120px;">Result</th>
+              </tr>
+            </thead>
+            <tbody style="border-color: rgba(148,163,184,.12);">
+              <tr>
+                <td class="text-muted">Now</td>
+                <td><%= user.username %></td>
+                <td>View dashboard</td>
+                <td class="text-muted">/main</td>
+                <td><span class="badge text-bg-success">OK</span></td>
+              </tr>
+              <tr>
+                <td class="text-muted">—</td>
+                <td class="text-muted">attacker</td>
+                <td>CSRF (GET)</td>
+                <td class="text-muted">/change-password-unsafe</td>
+                <td><span class="badge text-bg-warning">Possible</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="d-flex gap-2 mt-3">
+          <a class="btn btn-danger" href="/change-password">Try Unsafe Change</a>
+          <a class="btn btn-ghost" href="http://localhost:4000/attack.html" target="_blank" rel="noreferrer">
+            Trigger CSRF from attacker
+          </a>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <%- include("partials/scripts") %>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<div class="app-sidebar p-3">
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <div class="brand">
+      <span style="color:#a5b4fc;">CSRF</span><span style="color:#93c5fd;">Lab</span>
+    </div>
+    <span class="badge text-bg-dark border" style="border-color: rgba(148,163,184,.18)!important;">
+      v1
+    </span>
+  </div>
+
+  <div class="card-soft p-3 mb-3">
+    <div class="small text-muted">Environment</div>
+    <div class="fw-semibold">Victim: <span class="text-muted">https://localhost:3000</span></div>
+    <div class="fw-semibold">Attacker: <span class="text-muted">http://localhost:4000</span></div>
+  </div>
+
+  <div class="small text-muted mb-2">Navigation</div>
+
+  <div class="d-grid gap-2">
+    <a class="nav-pill <%= (active === 'main') ? 'active' : '' %>" href="/main">
+      <span>📊</span><span>Dashboard</span>
+    </a>
+
+    <a class="nav-pill <%= (active === 'change') ? 'active' : '' %>" href="/change-password">
+      <span>🔑</span><span>Change Password</span>
+    </a>
+
+    <a class="nav-pill" href="http://localhost:4000/attack.html" target="_blank" rel="noreferrer">
+      <span>🧨</span><span>Open Attacker Page</span>
+    </a>
+  </div>
+
+  <hr style="border-color: rgba(148,163,184,.14);" class="my-3">
+
+  <div class="small text-muted">Tips</div>
+  <div class="small text-muted">
+    1) Login ก่อน <br/>
+    2) เปิด attacker page <br/>
+    3) กลับมาลอง login ด้วยรหัสใหม่
+  </div>
+</div>
