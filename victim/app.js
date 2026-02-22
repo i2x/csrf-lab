@@ -12,7 +12,10 @@ const app = express();
 const users = [
     // demo user: alice / password123
     { id: 1, username: "admin", passwordHash: bcrypt.hashSync("admin", 10) },
-    { id: 2, username: "au", passwordHash: bcrypt.hashSync("au", 10) },
+    { id: 2, username: "user1", passwordHash: bcrypt.hashSync("user1", 10) },
+    { id: 3, username: "user2", passwordHash: bcrypt.hashSync("user2", 10) },
+    { id: 4, username: "user3", passwordHash: bcrypt.hashSync("user3", 10) },
+
 
 ];
 
@@ -290,5 +293,7 @@ https
     .listen(3000, () => {
         console.log("Victim running on https://localhost:3000");
         console.log("Demo user: admin / admin");
-        console.log("Demo user: au / au");
+        console.log("Demo user: user1 / user1");
+        console.log("Demo user: user2 / user2");
+        console.log("Demo user: user3 / user3");
     });
