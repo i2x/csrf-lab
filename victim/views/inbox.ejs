@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+  <%- include("partials/head", { title: "ข้อความส่วนตัว (Inbox) - RegLab" }) %>
+</head>
+<body>
+  <div class="app-shell">
+    <%- include("partials/sidebar", { active: "inbox", user }) %>
+
+    <div>
+      <%- include("partials/topbar", { user }) %>
+
+      <div class="content">
+        <div class="d-flex align-items-start justify-content-between flex-wrap gap-2 mb-3">
+          <div>
+            <h3 class="mb-0">ข้อความส่วนตัว (Inbox)</h3>
+            <div class="crumb mt-1">
+              <a href="/main">หน้าหลักนักศึกษา</a> &nbsp;›&nbsp; ข้อความส่วนตัว
+            </div>
+          </div>
+
+          <span class="badge text-bg-light" style="border:1px solid var(--line);">
+            ยังไม่อ่าน <%= unreadCount %>
+          </span>
+        </div>
+
+        <div class="content-block">
+          <div class="block-title">รายการข้อความ</div>
+
+          <div class="list-group">
+            <% items.forEach((m) => { %>
+              <a href="/inbox/<%= m.id %>"
+                 class="list-group-item list-group-item-action"
+                 style="border-color: var(--line);">
+                <div class="d-flex gap-3 align-items-start">
+
+                  <!-- thumb -->
+                  <% if (m.imageUrl) { %>
+                    <img src="<%= m.imageUrl %>"
+                         alt="thumb"
+                         style="width:76px;height:54px;object-fit:cover;border-radius:12px;border:1px solid var(--line);" />
+                  <% } else { %>
+                    <div style="width:76px;height:54px;border-radius:12px;border:1px solid var(--line);background:#f1f5f9;"></div>
+                  <% } %>
+
+                  <div class="flex-grow-1">
+                    <div class="d-flex align-items-center gap-2">
+                      <div class="fw-bold"><%= m.title %></div>
+                      <% if (m.unread) { %>
+                        <span class="badge rounded-pill text-bg-success">ใหม่</span>
+                      <% } %>
+                    </div>
+
+                    <div class="text-muted small mt-1">
+                      จาก: <%= m.from %> • <%= m.createdAt %>
+                      <% if (m.attachments && m.attachments.length) { %>
+                        • <span class="text-muted">มีไฟล์แนบ</span>
+                      <% } %>
+                    </div>
+
+                    <div class="text-muted small mt-1"><%= m.snippet %></div>
+                  </div>
+
+                  <div class="text-muted small">›</div>
+                </div>
+              </a>
+            <% }) %>
+          </div>
+
+          <% if (!items.length) { %>
+            <div class="empty-state mt-3">
+              <div class="text-center">
+                <div class="icon">!</div>
+                <div class="label">ไม่พบข้อมูล</div>
+              </div>
+            </div>
+          <% } %>
+        </div>
+
+        <div class="text-center text-muted small mt-4">© 2026 RegLab (Educational)</div>
+      </div>
+    </div>
+  </div>
+
+  <%- include("partials/scripts") %>
+</body>
+</html>

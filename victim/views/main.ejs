@@ -1,111 +1,107 @@
 <!doctype html>
 <html>
 <head>
-  <%- include("partials/head", { title: "Dashboard - CSRF Lab" }) %>
+  <%- include("partials/head", { title: "ค่าธรรมเนียม/ทุน - RegLab" }) %>
 </head>
-
 <body>
   <div class="app-shell">
     <%- include("partials/sidebar", { active: "main", user }) %>
-    <%- include("partials/topbar", { user }) %>
 
-    <main class="app-main">
-      <div class="d-flex align-items-end justify-content-between flex-wrap gap-2 mb-3">
-        <div>
-          <h4 class="mb-1">Security Dashboard</h4>
-          <div class="text-muted">Monitoring session-based auth + CSRF demo endpoints</div>
-        </div>
+    <div>
+      <%- include("partials/topbar", { user }) %>
 
-        <div class="d-flex gap-2">
-          <a href="/change-password" class="btn btn-accent">Go to Change Password</a>
-          <a href="http://localhost:4000/attack.html" target="_blank" rel="noreferrer" class="btn btn-ghost">
-            Open Attacker
-          </a>
-        </div>
-      </div>
-
-      <!-- metric cards -->
-      <div class="row g-3 mb-3">
-        <div class="col-12 col-md-4">
-          <div class="card-glass p-3 h-100">
-            <div class="text-muted small">Auth</div>
-            <div class="d-flex align-items-center justify-content-between mt-1">
-              <div class="fs-4 fw-semibold">Session Active</div>
-              <span class="badge text-bg-success">OK</span>
-            </div>
-            <div class="text-muted small mt-2">
-              Logged in as <span class="fw-semibold"><%= user.username %></span>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-4">
-          <div class="card-glass p-3 h-100">
-            <div class="text-muted small">Cookie Policy</div>
-            <div class="fs-4 fw-semibold mt-1">SameSite=None</div>
-            <div class="text-muted small mt-2">Secure=true (HTTPS localhost)</div>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-4">
-          <div class="card-glass p-3 h-100">
-            <div class="text-muted small">CSRF Protection</div>
-            <div class="fs-4 fw-semibold mt-1">Disabled</div>
-            <div class="text-muted small mt-2">Vulnerable endpoint enabled for lab</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- activity table -->
-      <div class="card-glass p-3">
-        <div class="d-flex align-items-center justify-content-between mb-2">
+      <div class="content">
+        <!-- Page header -->
+        <div class="d-flex align-items-start justify-content-between flex-wrap gap-2 mb-3">
           <div>
-            <div class="fw-semibold">Recent Actions</div>
-            <div class="text-muted small">This is a demo table (static UI)</div>
+            <div class="page-title">ค่าใช้จ่าย/ทุน</div>
+            <div class="crumb page-subcrumb">
+              <a href="/main">หน้าหลักนักศึกษา</a> &nbsp;›&nbsp; ค่าใช้จ่าย/ทุน
+            </div>
           </div>
-          <span class="badge text-bg-dark border" style="border-color: rgba(148,163,184,.18)!important;">
-            Lab Mode
-          </span>
         </div>
 
-        <div class="table-responsive">
-          <table class="table table-dark table-hover align-middle mb-0" style="--bs-table-bg: transparent;">
-            <thead style="border-color: rgba(148,163,184,.12);">
-              <tr>
-                <th style="min-width:140px;">Time</th>
-                <th>Actor</th>
-                <th>Action</th>
-                <th style="min-width:220px;">Target</th>
-                <th style="min-width:120px;">Result</th>
-              </tr>
-            </thead>
-            <tbody style="border-color: rgba(148,163,184,.12);">
-              <tr>
-                <td class="text-muted">Now</td>
-                <td><%= user.username %></td>
-                <td>View dashboard</td>
-                <td class="text-muted">/main</td>
-                <td><span class="badge text-bg-success">OK</span></td>
-              </tr>
-              <tr>
-                <td class="text-muted">—</td>
-                <td class="text-muted">attacker</td>
-                <td>CSRF (GET)</td>
-                <td class="text-muted">/change-password-unsafe</td>
-                <td><span class="badge text-bg-warning">Possible</span></td>
-              </tr>
-            </tbody>
-          </table>
+        <!-- Green status banner (เหมือน "ไม่มียอดเงินค้างชำระ") -->
+        <div class="kpi-banner mb-3">
+          <div class="big text-center">ไม่มียอดเงินค้างชำระ</div>
         </div>
 
-        <div class="d-flex gap-2 mt-3">
-          <a class="btn btn-danger" href="/change-password">Try Unsafe Change</a>
-          <a class="btn btn-ghost" href="http://localhost:4000/attack.html" target="_blank" rel="noreferrer">
-            Trigger CSRF from attacker
-          </a>
+        <!-- Block 1: Filters + Table -->
+        <div class="content-block mb-3">
+          <div class="row g-3 align-items-end mb-2">
+            <div class="col-12 col-lg-3">
+              <label class="form-label text-muted">ปีการศึกษา</label>
+              <select class="form-select">
+                <option selected>2568</option>
+                <option>2567</option>
+                <option>2566</option>
+              </select>
+            </div>
+
+            <div class="col-12 col-lg-4">
+              <label class="form-label text-muted">ภาคที่</label>
+              <div class="tab-pill">
+                <button type="button" class="active">1</button>
+                <button type="button">2</button>
+                <button type="button">3</button>
+              </div>
+            </div>
+
+
+            
+          </div>
+
+          <div class="block-title mt-2">รายการค่าใช้จ่าย</div>
+
+          <div class="table-responsive">
+            <table class="table table-portal align-middle mb-0">
+              <thead>
+                <tr>
+                  <th style="width:120px;">ครั้งที่ลงทะเบียน</th>
+                  <th>ค่าใช้จ่าย</th>
+                  <th style="width:140px;" class="text-end">จำนวนเงิน</th>
+                  <th style="width:140px;" class="text-end">ยอดค้างชำระ</th>
+                  <th style="width:220px;">ใบเสร็จ</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-center">1</td>
+                  <td>เงินอุดหนุนการศึกษาหลักสูตรเสริมทักษะภาษาอังกฤษ</td>
+                  <td class="text-end">25,000.00</td>
+                  <td class="text-end">-</td>
+                  <td class="text-muted">ZV:2569-1/3599 (08/12/68)</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td></td>
+                  <td class="text-center">ค่าใช้จ่ายรวม</td>
+                  <td class="text-end">25,000.00</td>
+                  <td class="text-end">-</td>
+                  <td></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
         </div>
+
+        <!-- Block 2: Big empty panel -->
+        <div class="content-block">
+          <div class="block-title">ข้อมูลทุนการศึกษา</div>
+
+          <div class="empty-state">
+            <div class="text-center">
+              <div class="icon">!</div>
+              <div class="label">ไม่พบข้อมูล</div>
+              <div class="text-muted small mt-1">ตัวอย่างหน้าจอสำหรับ Lab</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center text-muted small mt-4">© 2026 RegLab (Educational)</div>
       </div>
-    </main>
+    </div>
   </div>
 
   <%- include("partials/scripts") %>

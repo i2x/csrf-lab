@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+  <%- include("partials/head", { title: "อ่านข้อความ - RegLab" }) %>
+</head>
+<body>
+  <div class="app-shell">
+    <%- include("partials/sidebar", { active: "inbox", user }) %>
+
+    <div>
+      <%- include("partials/topbar", { user }) %>
+
+      <div class="content">
+        <div class="d-flex align-items-start justify-content-between flex-wrap gap-2 mb-3">
+          <div>
+            <h3 class="mb-0">อ่านข้อความ</h3>
+            <div class="crumb mt-1">
+              <a href="/main">หน้าหลักนักศึกษา</a> &nbsp;›&nbsp;
+              <a href="/inbox">ข้อความส่วนตัว</a> &nbsp;›&nbsp; รายละเอียด
+            </div>
+          </div>
+
+          <a href="/inbox" class="btn btn-outline-teal">← กลับไป Inbox</a>
+        </div>
+
+        <div class="content-block">
+          <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+            <div>
+              <div class="block-title mb-1"><%= msg.title %></div>
+              <div class="text-muted small">
+                จาก: <%= msg.from %> • ส่งเมื่อ: <%= msg.createdAt %>
+                <% if (msg.readAt) { %>
+                  • อ่านเมื่อ: <%= msg.readAt %>
+                <% } %>
+              </div>
+            </div>
+          </div>
+
+          <hr/>
+
+          <% if (msg.imageUrl) { %>
+            <img src="<%= msg.imageUrl %>"
+                 alt="attachment"
+                 class="img-fluid rounded-3 mb-3"
+                 style="border:1px solid var(--line); box-shadow: var(--shadow);" />
+          <% } %>
+
+          <% if (msg.attachments && msg.attachments.length) { %>
+            <div class="mb-3">
+              <div class="fw-bold mb-2">ไฟล์แนบ</div>
+              <ul class="mb-0">
+                <% msg.attachments.forEach((a) => { %>
+                  <li><a href="<%= a.url %>" target="_blank" rel="noreferrer"><%= a.name %></a></li>
+                <% }) %>
+              </ul>
+            </div>
+          <% } %>
+
+          <pre style="white-space: pre-wrap; margin:0; font-family: inherit; font-size: 15px; line-height: 1.65;">
+<%= msg.body %>
+          </pre>
+        </div>
+
+        <div class="text-center text-muted small mt-4">© 2026 RegLab (Educational)</div>
+      </div>
+    </div>
+  </div>
+
+  <%- include("partials/scripts") %>
+</body>
+</html>

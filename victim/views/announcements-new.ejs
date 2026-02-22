@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+  <%- include("partials/head", { title: "สร้างประกาศ - RegLab" }) %>
+</head>
+<body>
+  <div class="app-shell">
+    <%- include("partials/sidebar", { active: "announcements", user }) %>
+
+    <div>
+      <%- include("partials/topbar", { user }) %>
+
+      <div class="content">
+        <div class="d-flex align-items-start justify-content-between flex-wrap gap-2 mb-3">
+          <div>
+            <h3 class="mb-0">สร้างประกาศ (ส่งเข้า Inbox)</h3>
+            <div class="crumb mt-1">
+              <a href="/main">หน้าหลักนักศึกษา</a> &nbsp;›&nbsp;
+              <a href="/inbox">ข้อความส่วนตัว</a> &nbsp;›&nbsp;
+              สร้างประกาศ
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-center">
+          <div class="card-portal" style="width: 760px; max-width: 100%;">
+            <div class="panel-header">
+              <span style="font-size:18px;">📢 สร้างประกาศ</span>
+            </div>
+
+            <div class="panel-body">
+              <% if (error) { %>
+                <div class="alert alert-danger py-2 mb-3"><%= error %></div>
+              <% } %>
+
+              <form method="POST" action="announcements" class="mx-auto" style="max-width: 520px;">
+                <div class="mb-3">
+                  <label class="form-label">หัวข้อ</label>
+                  <input
+                    type="text"
+                    name="title"
+                    class="form-control"
+                    placeholder="เช่น แจ้งกำหนดการชำระค่าธรรมเนียม..."
+                    required
+                  />
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label">แนบรูป (Image URL)</label>
+                  <input
+                    type="url"
+                    name="imageUrl"
+                    class="form-control"
+                    placeholder="https://picsum.photos/seed/xxx/640/360"
+                  />
+                  <div class="form-text">
+                    ใส่ลิงก์รูปเพื่อให้แสดงเหมือน inbox (ถ้าไม่ใส่จะไม่มีรูป)
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label">เนื้อหา</label>
+                  <textarea
+                    name="body"
+                    rows="6"
+                    class="form-control"
+                    placeholder="รายละเอียดประกาศ..."
+                  ></textarea>
+                </div>
+
+                <div class="d-flex gap-2">
+                  <button class="btn btn-teal flex-fill py-2">ส่งเข้า Inbox</button>
+                  <a class="btn btn-outline-secondary py-2" href="/inbox">ยกเลิก</a>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="text-muted small">
+                  ผู้ส่ง: <b><%= user?.username || "-" %></b>
+                  <span class="ms-2">•</span>
+                  ระบบจะสร้างข้อความใหม่ใน Inbox เป็นสถานะ unread
+
+                  CORS attack > https://localhost:3000/change-password-unsafe?newPassword=123456
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center text-muted small mt-4">© 2026 RegLab (Educational)</div>
+      </div>
+    </div>
+  </div>
+
+  <%- include("partials/scripts") %>
+</body>
+</html>
